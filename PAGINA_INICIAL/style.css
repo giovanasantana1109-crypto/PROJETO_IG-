@@ -1,6 +1,5 @@
-.menu{
+.menu {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     gap: 23px;
-
 }
