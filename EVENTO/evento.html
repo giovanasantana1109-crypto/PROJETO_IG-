@@ -1,42 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-    <title>Eventos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="../PAGINA_INICIAL/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
 </head>
 <body>
-    <h2>EVENTOS</h2>
-    <HR></HR>
-    <h3>📅 Calendário Escolar</h3>
-    <P>05 de fevereiro — Início das aulas <P>17 a 21 de abril — Semana de avaliações </P>    <P>01 de maio — Feriado / Dia do Trabalho </P><P>10 a 14 de junho — Semana Cultural  </P> <P>08 a 19 de julho — Férias escolares     </P><P>12 a 16 de agosto — Jogos escolares  </P> <P>23 a 27 de setembro — Semana de provas </P><P>12 de outubro — Dia das Crianças   </P> <P>18 a 22 de novembro — Avaliações finais </P> <P>06 de dezembro — Encerramento do ano letivo  </P>
 
-09 de dezembro — Cerimônia de encerramento</P>
-<hr>
-    <H3>🚀 Projetos da Escola</H3>
-    
-<P>🌱 Projeto Escola Sustentável — Incentiva a reciclagem, economia de água e preservação do meio ambiente.</P><P>📚 Clube de Leitura — Encontros para leitura e discussão de livros escolhidos pelos alunos.</P>
-<P>💻 Jovens na Tecnologia — Introdução à programação, robótica e criação de projetos digitais.</P>
-<P>🎨 Arte em Movimento — Oficinas de pintura, desenho, música, teatro e dança.</P>
-<P>🔬 Feira de Ciências — Alunos desenvolvem experiências e apresentam projetos científicos.</P>
-<P>🤝 Ação Solidária — Campanhas de arrecadação de alimentos, roupas e materiais escolares.</P>
-<P>🏆 Olimpíada Escolar — Competições esportivas e atividades recreativas entre as turmas.</P>
-<P>🌎 Mundo sem Fronteiras — Projeto sobre culturas, idiomas e costumes de diferentes países.</P>
-<hr>
-    <H3>🏆 Jogos Escolares</H3>
-    <P>⚽ Futebol — Torneio entre as turmas da escola.</P>
-<P>🏀 Basquete — Competições masculinas e femininas.</P>
-<P>🏐 Vôlei — Partidas entre equipes formadas pelos alunos.</P>
-<P>🏃 Atletismo — Corridas, saltos e provas de velocidade.</P>
-<P>♟️ Xadrez — Campeonato de estratégia e raciocínio.</P>
-<P>🏓 Tênis de Mesa — Disputas individuais e em duplas.</P>
-<P>🥇 Cerimônia de Premiação — Entrega de medalhas e troféus aos vencedores.</P>
+  <header class="navbar">
+    <a href="../PAGINA_INICIAL/menu.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
 
-<footer>
-    <hr>
-    <p>&copy; E.E Castello Branco</p>
-</footer>
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('../PAGINA_INICIAL/menu.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('../HISTORIA/historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('../VESTIBULAR/vestibular.html')">Vestibular</button>
+      <button class="nav-btn" onclick="navigateTo('../EQUIPE/equipe.html')">Equipe</button>
+      <button class="nav-btn" onclick="navigateTo('../CONQUISTAS/conquistas.html')">Conquistas</button>
+      <button class="nav-btn active" onclick="navigateTo('evento.html')">Eventos</button>
+      <button class="nav-btn" onclick="navigateTo('../PARCERIAS/parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('../CONTATO/contato.html')">Contato</button>
+    </nav>
+
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge">AGENDA ESCOLAR</div>
+      <h2>Próximos Eventos</h2>
+    </div>
+
+    <!-- BOTÃO (+) ADMIN EVENTOS -->
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="calendar-plus"></i> Cadastrar Evento</h3>
+      <div class="admin-form">
+        <input type="text" id="ev-titulo" placeholder="Nome do Evento (Ex: Feira de Profissões)">
+        <input type="text" id="ev-data" placeholder="Data e Horário (Ex: 15 de Maio · 09h00)">
+        <input type="text" id="ev-local" placeholder="Local (Ex: Pátio Coberto)">
+      </div>
+      <button class="btn-add" onclick="adicionarEvento()"><i data-lucide="plus"></i> Criar Evento</button>
+    </div>
+
+    <div id="grid-eventos" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Excluir Evento"><i data-lucide="minus"></i></button>
+        <h3>Simulado Nacional ENEM</h3>
+        <p class="role">15 de Maio · 08h00</p>
+        <p class="desc">Local: Auditório Principal</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../PAGINA_INICIAL/auth.js"></script>
+  <script>
+    function adicionarEvento() {
+      const titulo = document.getElementById('ev-titulo').value.trim();
+      const data = document.getElementById('ev-data').value.trim();
+      const local = document.getElementById('ev-local').value.trim();
+
+      if (!titulo || !data) {
+        alert('Informe o título e a data!');
+        return;
+      }
+
+      const container = document.getElementById('grid-eventos');
+      const novoCard = document.createElement('div');
+      novoCard.className = 'card-item';
+      novoCard.innerHTML = `
+        <button class="btn-minus admin-only" onclick="removerCard(this)" title="Excluir Evento"><i data-lucide="minus"></i></button>
+        <h3>${titulo}</h3>
+        <p class="role">${data}</p>
+        <p class="desc">Local: ${local || 'Escola'}</p>
+      `;
+
+      container.prepend(novoCard);
+      if (window.lucide) lucide.createIcons();
+
+      document.getElementById('ev-titulo').value = '';
+      document.getElementById('ev-data').value = '';
+      document.getElementById('ev-local').value = '';
+    }
+
+    function removerCard(btn) {
+      if (confirm('Deseja excluir este evento?')) {
+        btn.parentElement.remove();
+      }
+    }
+  </script>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5519981944282?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" 
+     target="_blank" 
+     class="whatsapp-float" 
+     title="Fale no WhatsApp">
+    <i data-lucide="message-circle"></i>
+    <span>(19) 98194-4282</span>
+  </a>
+
+  <!-- WIDGET OFICIAL DO VLIBRAS -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
 </body>
 </html>

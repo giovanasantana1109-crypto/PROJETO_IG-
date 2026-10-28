@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parcerias</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcerias - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="../PAGINA_INICIAL/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
 </head>
-
 <body>
 
-    <header>
-        <h1>E.E.Castello Branco</h1>
+  <header class="navbar">
+    <a href="../PAGINA_INICIAL/menu.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
 
-        <nav>
-            <a href="">Início</a>
-            <a href="">Cursos</a>
-            <a href="">Notícias</a>
-            <a href="">Matrícula</a>
-            <a href="">História</a>
-            <a href="">Parcerias</a>
-        </nav>
-    </header>
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('../PAGINA_INICIAL/menu.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('../HISTORIA/historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('../VESTIBULAR/vestibular.html')">Vestibular</button>
+      <button class="nav-btn" onclick="navigateTo('../EQUIPE/equipe.html')">Equipe</button>
+      <button class="nav-btn" onclick="navigateTo('../CONQUISTAS/conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('../EVENTO/evento.html')">Eventos</button>
+      <button class="nav-btn active" onclick="navigateTo('parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('../CONTATO/contato.html')">Contato</button>
+    </nav>
 
-    <main>
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
 
-        <section>
-            <h2>Nossas Parcerias</h2>
-            <p>
-                Conheça as empresas e instituições que fazem parte
-                da nossa rede de parceiros.
-            </p>
-        </section>
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge">PARCERIAS E INSTITUIÇÕES</div>
+      <h2>Nossos Parceiros Educacionais</h2>
+    </div>
 
-        <section>
-            <h2>Parceiros</h2>
+    <div class="grid-cards">
+      <div class="card-item">
+        <h3>Novotec SP</h3>
+        <p class="desc">Cursos técnicos integrados ao ensino médio para capacitação profissional.</p>
+      </div>
+      <div class="card-item">
+        <h3>Universidades Parceiras</h3>
+        <p class="desc">Isenções de taxa de vestibular e visitas guiadas a campos universitários.</p>
+      </div>
+    </div>
+  </main>
 
-            <article>
-                <img src="" alt="Logo do SENAI">
+  <script src="../PAGINA_INICIAL/auth.js"></script>
 
-                <h3>SENAI</h3>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. A quis atque quisquam cum omnis rem temporibus nesciunt error voluptatibus, veniam quas natus, velit obcaecati culpa illum aliquam quam laboriosam eius?</p>
-            </article>
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5519981944282?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" 
+     target="_blank" 
+     class="whatsapp-float" 
+     title="Fale no WhatsApp">
+    <i data-lucide="message-circle"></i>
+    <span>(19) 98194-4282</span>
+  </a>
 
-            <article>
-                <img src="" alt="Logo da UNICAMP">
-
-                <h3>UNICAMP</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo laudantium animi, culpa placeat maxime dolorum vitae quis dicta assumenda modi doloremque ad officia amet ea iure dolores labore, quam reiciendis.</p>
-            </article>
-
-            <article>
-                <img src="" alt="Logo do CEL">
-
-                <h3>CEL</h3>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus ipsam a recusandae at harum et eum, temporibus doloremque porro vel dolorum quisquam nobis asperiores, id eveniet molestiae repudiandae provident cum!</p>
-            </article>
-
-        </section>
-
-        <section>
-            <h2>Seja um parceiro</h2>
-            <p>
-                Sua instituição também pode fazer parte das nossas parcerias.
-            </p>
-
-            <button>Quero ser parceiro</button>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>E.E. Castello Branco - Todos os direitos reservados ©</p>
-    </footer>
+  <!-- WIDGET OFICIAL DO VLIBRAS -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
 </body>
-
 </html>

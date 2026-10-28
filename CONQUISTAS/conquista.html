@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conquistas - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="../PAGINA_INICIAL/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="../PAGINA_INICIAL/menu.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
+
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('../PAGINA_INICIAL/menu.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('../HISTORIA/historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('../VESTIBULAR/vestibular.html')">Vestibular</button>
+      <button class="nav-btn" onclick="navigateTo('../EQUIPE/equipe.html')">Equipe</button>
+      <button class="nav-btn active" onclick="navigateTo('conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('../EVENTO/evento.html')">Eventos</button>
+      <button class="nav-btn" onclick="navigateTo('../PARCERIAS/parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('../CONTATO/contato.html')">Contato</button>
+    </nav>
+
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge">INTERCÂMBIO E DEPOIMENTOS</div>
+      <h2>Histórias de Sucesso de Alunos</h2>
+      <p>Relatos de estudantes que conquistaram experiências internacionais.</p>
+    </div>
+
+    <!-- BOTÃO (+) ADMIN CONQUISTAS -->
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="award"></i> Adicionar Aluno de Intercâmbio</h3>
+      <div class="admin-form">
+        <input type="text" id="arq-aluno" placeholder="Nome do Aluno (Ex: Beatriz Silva)">
+        <input type="text" id="arq-pais" placeholder="País (Ex: Canadá 🇨🇦)">
+        <input type="text" id="arq-foto" placeholder="Link/URL da Foto">
+        <textarea id="arq-relato" placeholder="Relato do aluno sobre a viagem..."></textarea>
+      </div>
+      <button class="btn-add" onclick="adicionarRelato()"><i data-lucide="plus"></i> Publicar Depoimento</button>
+    </div>
+
+    <!-- CARDS DE INTERCÂMBIO COM BOTÃO (-) -->
+    <div id="grid-conquistas" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover Depoimento"><i data-lucide="minus"></i></button>
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500&q=80" alt="Aluna">
+        <h3>Mariana Alves</h3>
+        <p class="role">Canadá 🇨🇦</p>
+        <p class="desc"><em>"O programa de intercâmbio da escola me permitiu estudar em Toronto. Uma oportunidade inesquecível!"</em></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../PAGINA_INICIAL/auth.js"></script>
+  <script>
+    function adicionarRelato() {
+      const aluno = document.getElementById('arq-aluno').value.trim();
+      const pais = document.getElementById('arq-pais').value.trim();
+      let foto = document.getElementById('arq-foto').value.trim();
+      const relato = document.getElementById('arq-relato').value.trim();
+
+      if (!aluno || !relato) {
+        alert('Informe o nome do aluno e o relato!');
+        return;
+      }
+
+      if (!foto) foto = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500&q=80';
+
+      const container = document.getElementById('grid-conquistas');
+      const novoCard = document.createElement('div');
+      novoCard.className = 'card-item';
+      novoCard.innerHTML = `
+        <button class="btn-minus admin-only" onclick="removerCard(this)" title="Remover Depoimento"><i data-lucide="minus"></i></button>
+        <img src="${foto}" alt="Foto de ${aluno}">
+        <h3>${aluno}</h3>
+        <p class="role">${pais || 'Intercâmbio'}</p>
+        <p class="desc"><em>"${relato}"</em></p>
+      `;
+
+      container.prepend(novoCard);
+      if (window.lucide) lucide.createIcons();
+
+      document.getElementById('arq-aluno').value = '';
+      document.getElementById('arq-pais').value = '';
+      document.getElementById('arq-foto').value = '';
+      document.getElementById('arq-relato').value = '';
+    }
+
+    function removerCard(btn) {
+      if (confirm('Deseja excluir este depoimento?')) {
+        btn.parentElement.remove();
+      }
+    }
+  </script>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5519981944282?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" 
+     target="_blank" 
+     class="whatsapp-float" 
+     title="Fale no WhatsApp">
+    <i data-lucide="message-circle"></i>
+    <span>(19) 98194-4282</span>
+  </a>
+
+  <!-- WIDGET OFICIAL DO VLIBRAS -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+</body>
+</html>

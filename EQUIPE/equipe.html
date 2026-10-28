@@ -1,90 +1,139 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nossa Equipe</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipe - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="../PAGINA_INICIAL/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
 </head>
-
 <body>
 
-    <header>
-        <nav class="menu">
-            <a href="index.html">Início</a>
-            <a href="parceria.html">Parcerias</a>
-            <a href="equipe.html">Equipe</a>
-            <a href="conquistas.html">Conquistas</a>
-            <a href="eventos.html">Eventos</a>
-            <a href="contatos.html">Contatos</a>
-        </nav>
-    </header>
+  <header class="navbar">
+    <a href="../PAGINA_INICIAL/menu.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
 
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('../PAGINA_INICIAL/menu.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('../HISTORIA/historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('../VESTIBULAR/vestibular.html')">Vestibular</button>
+      <button class="nav-btn active" onclick="navigateTo('equipe.html')">Equipe</button>
+      <button class="nav-btn" onclick="navigateTo('../CONQUISTAS/conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('../EVENTO/evento.html')">Eventos</button>
+      <button class="nav-btn" onclick="navigateTo('../PARCERIAS/parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('../CONTATO/contato.html')">Contato</button>
+    </nav>
 
-    <!-- EQUIPE -->
-    <main class="equipe">
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
 
-        <p class="titulo-pequeno">NOSSA EQUIPE</p>
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge">NOSSA EQUIPE</div>
+      <h2>Professores e Gestão Escolar</h2>
+      <p>Corpo docente da E.E. Castello Branco.</p>
+    </div>
 
-        <h1>Professores apaixonados pelo que fazem</h1>
+    <!-- BOTÃO (+) PAINEL ADMIN PARA PROFESSORES -->
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="user-plus"></i> Adicionar Membro da Equipe</h3>
+      <div class="admin-form">
+        <input type="text" id="eq-nome" placeholder="Nome (Ex: Prof. Carlos)">
+        <input type="text" id="eq-cargo" placeholder="Cargo/Matéria (Ex: Física)">
+        <input type="text" id="eq-foto" placeholder="Link/URL da Foto">
+        <textarea id="eq-desc" placeholder="Descrição rápida do professor..."></textarea>
+      </div>
+      <button class="btn-add" onclick="adicionarProfessor()"><i data-lucide="plus"></i> Cadastrar Professor</button>
+    </div>
 
-        <p class="descricao">
-            Conheça os professores que fazem parte da nossa escola
-            e ajudam nossos alunos a alcançar seus objetivos.
-        </p>
+    <!-- CARDS COM BOTÃO (-) -->
+    <div id="grid-equipe" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover Professor"><i data-lucide="minus"></i></button>
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Foto">
+        <h3>Dra. Nayara</h3>
+        <p class="role">Diretora Pedagógica</p>
+        <p class="desc">Doutora em Educação .</p>
+      </div>
 
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover Professor"><i data-lucide="minus"></i></button>
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Foto">
+        <h3>Prof. Wladmir</h3>
+        <p class="role">Coordenador de Exatas</p>
+        <p class="desc">Professor de Matemática .</p>
+      </div>
+    </div>
+  </main>
 
-       
-        <section class="cards-equipe">
+  <script src="../PAGINA_INICIAL/auth.js"></script>
+  <script>
+    function adicionarProfessor() {
+      const nome = document.getElementById('eq-nome').value.trim();
+      const cargo = document.getElementById('eq-cargo').value.trim();
+      let foto = document.getElementById('eq-foto').value.trim();
+      const desc = document.getElementById('eq-desc').value.trim();
 
-   
-            <div class="card">
+      if (!nome || !cargo) {
+        alert('Preencha o Nome e o Cargo!');
+        return;
+      }
 
+      if (!foto) foto = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80';
 
+      const container = document.getElementById('grid-equipe');
+      const novoCard = document.createElement('div');
+      novoCard.className = 'card-item';
+      novoCard.innerHTML = `
+        <button class="btn-minus admin-only" onclick="removerCard(this)" title="Remover Professor"><i data-lucide="minus"></i></button>
+        <img src="${foto}" alt="Foto de ${nome}">
+        <h3>${nome}</h3>
+        <p class="role">${cargo}</p>
+        <p class="desc">${desc || 'Docente da E.E. Castello Branco.'}</p>
+      `;
 
-                <div class="info">
+      container.prepend(novoCard);
+      if (window.lucide) lucide.createIcons();
 
-                    <h2>Prof. WLADMIR</h2>
+      document.getElementById('eq-nome').value = '';
+      document.getElementById('eq-cargo').value = '';
+      document.getElementById('eq-foto').value = '';
+      document.getElementById('eq-desc').value = '';
+    }
 
-                    <p class="cargo">
-                        Professor
-                    </p>
+    function removerCard(btn) {
+      if (confirm('Deseja remover este professor?')) {
+        btn.parentElement.remove();
+      }
+    }
+  </script>
 
-                    <p>
-                        Matemática
-                    </p>
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5519981944282?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" 
+     target="_blank" 
+     class="whatsapp-float" 
+     title="Fale no WhatsApp">
+    <i data-lucide="message-circle"></i>
+    <span>(19) 98194-4282</span>
+  </a>
 
-                </div>
-
-            </div>
-
-
-           
-            <div class="card">
-
-
-                <div class="info">
-
-                    <h2>Profa. NAYARA</h2>
-
-                    <p class="cargo">
-                        Professora
-                    </p>
-
-                    <p>
-                        Língua Portuguesa
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </section>
-
-    </main>
+  <!-- WIDGET OFICIAL DO VLIBRAS -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 
 </body>
-
 </html>
