@@ -56,11 +56,6 @@
         <h3>Parceria SENAI</h3>
         <p class="desc">Desenvolvimento de competências técnicas, inovação e projetos práticos integrados ao aprendizado dos alunos.</p>
       </div>
-      <div class="card-item">
-        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
-        <h3>Novotec SP</h3>
-        <p class="desc">Cursos profissionalizantes que preparam os jovens diretamente para as exigências do mercado de trabalho.</p>
-      </div>
     </div>
   </main>
 
@@ -82,7 +77,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Gabriela Lima, Giovana Santana, Gustavo Couto e Isabeli Martins</strong>.</p>
+      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Isabeli Sousa, Gabriela Lima, Giovana Santana e Gustavo Couto</strong>.</p>
     </div>
   </footer>
 
@@ -115,7 +110,7 @@
 
       let imgHtml = '';
       if (foto) {
-        imgHtml = `<img src="${foto}" alt="${titulo}" style="max-height: 200px; object-fit: cover; width: 100%; border-radius: 8px; margin-bottom: 10px;">`;
+        imgHtml = `<img src="${foto}" alt="${titulo}">`;
       }
 
       const card = document.createElement('div');
