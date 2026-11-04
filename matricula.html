@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrícula - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="style.css">
+  
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
+
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('index.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('estudos.html')">Estudos</button>
+      <button class="nav-btn" onclick="navigateTo('parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('equipe.html')">Equipe</button>
+      <button class="nav-btn" onclick="navigateTo('conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('eventos.html')">Eventos</button>
+      <button class="nav-btn active" onclick="navigateTo('matricula.html')">Matrícula</button>
+    </nav>
+
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge"><i data-lucide="file-check"></i> PROCESSO DE MATRÍCULA 2026</div>
+      <h2>Informações de Matrícula e Atendimento</h2>
+      <p>Confira os documentos exigidos e como solicitar a sua vaga na nossa escola.</p>
+    </div>
+
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="plus-circle"></i> Publicar Aviso de Matrícula / Orientação</h3>
+      <div class="admin-form">
+        <input type="text" id="matr-titulo" placeholder="Título do Aviso (Ex: Período de Rematrícula)">
+        <textarea id="matr-desc" placeholder="Detalhes ou documentos adicionais..."></textarea>
+      </div>
+      <button class="btn-add" onclick="adicionarOrientacao()"><i data-lucide="plus"></i> Publicar Orientação</button>
+    </div>
+
+    <div id="grid-matriculas" class="grid-cards" style="margin-bottom: 40px;">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <i data-lucide="clipboard-check" style="width: 36px; height: 36px; color: var(--accent-brown); margin-bottom: 12px;"></i>
+        <h3>Documentos Exigidos</h3>
+        <p class="desc">
+          • RG e CPF do Aluno e Responsável Legal<br>
+          • Comprovante de Residência Recente<br>
+          • Histórico Escolar / Atestado de Transferência<br>
+          • Carteira de Vacinação Atualizada
+        </p>
+      </div>
+
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <i data-lucide="clock" style="width: 36px; height: 36px; color: var(--accent-brown); margin-bottom: 12px;"></i>
+        <h3>Horário da Secretaria</h3>
+        <p class="desc">
+          Atendimento presencial de segunda a sexta-feira.<br>
+          <strong>Horário:</strong> das 07h00 às 17h00.
+        </p>
+      </div>
+    </div>
+
+    <div class="pane-header center" style="margin-top: 20px;">
+      <h3>Canais de Contato da Secretaria</h3>
+    </div>
+
+    <div class="grid-cards" style="justify-content: center; max-width: 700px; margin: 0 auto;">
+      <div class="card-item" style="text-align: center;">
+        <i data-lucide="map-pin" style="width: 40px; height: 40px; color: var(--accent-brown); margin-bottom: 12px;"></i>
+        <h3>Endereço</h3>
+        <p class="desc">Rua Piauí, 472 - Vila Cláudia<br>Limeira - SP, CEP 13480-406</p>
+      </div>
+
+      <div class="card-item" style="text-align: center;">
+        <i data-lucide="phone" style="width: 40px; height: 40px; color: var(--accent-brown); margin-bottom: 12px;"></i>
+        <h3>Telefone Fixo</h3>
+        <p class="desc">(19) 3441-1464</p>
+      </div>
+
+      <div class="card-item" style="text-align: center;">
+        <i data-lucide="message-circle" style="width: 40px; height: 40px; color: #25d366; margin-bottom: 12px;"></i>
+        <h3>WhatsApp Oficial</h3>
+        <p class="desc">(19) 99600-3861</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4><i data-lucide="graduation-cap"></i> E.E. Castello Branco</h4>
+        <p>Ensino de excelência, formando cidadãos e futuros profissionais em Limeira-SP.</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="phone"></i> Contato</h4>
+        <p><strong>Telefone:</strong> (19) 3441-1464</p>
+        <p><strong>WhatsApp:</strong> (19) 99600-3861</p>
+        <p><strong>Endereço:</strong> Rua Piauí, 472 - Vila Cláudia, Limeira - SP</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="share-2"></i> Redes Sociais</h4>
+        <a href="https://instagram.com" target="_blank" class="footer-social"><i data-lucide="instagram"></i> Siga no Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Gabriela Lima, Giovana Santana, Gustavo Couto e Isabeli Martins</strong>.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    const CHAVE_STORAGE = 'castello_matriculas';
+
+    function carregarMatriculas() {
+      const salvos = localStorage.getItem(CHAVE_STORAGE);
+      if (salvos) {
+        document.getElementById('grid-matriculas').innerHTML = salvos;
+        if (window.lucide) lucide.createIcons();
+        const savedRole = sessionStorage.getItem('userRole');
+        if (savedRole === 'Gestão/Professor') {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+        }
+      }
+    }
+
+    function salvarMatriculas() {
+      localStorage.setItem(CHAVE_STORAGE, document.getElementById('grid-matriculas').innerHTML);
+    }
+
+    function adicionarOrientacao() {
+      const titulo = document.getElementById('matr-titulo').value.trim();
+      const desc = document.getElementById('matr-desc').value.trim();
+
+      if (!titulo || !desc) { alert('Informe o título e os detalhes!'); return; }
+
+      const card = document.createElement('div');
+      card.className = 'card-item';
+      card.innerHTML = `
+        <button class="btn-minus admin-only" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <i data-lucide="info" style="width: 36px; height: 36px; color: var(--accent-brown); margin-bottom: 12px;"></i>
+        <h3>${titulo}</h3>
+        <p class="desc">${desc}</p>`;
+
+      document.getElementById('grid-matriculas').prepend(card);
+      if (window.lucide) lucide.createIcons();
+      document.getElementById('matr-titulo').value = '';
+      document.getElementById('matr-desc').value = '';
+      salvarMatriculas();
+    }
+
+    function removerCard(btn) { 
+      if (confirm('Deseja excluir esta orientação?')) {
+        btn.parentElement.remove(); 
+        salvarMatriculas();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarMatriculas);
+  </script>
+
+  <a href="https://wa.me/5519996003861?text=Olá,%20gostaria%20de%20informações%20sobre%20matrícula%20na%20E.E.%20Castello%20Branco" target="_blank" class="whatsapp-float" title="Fale no WhatsApp"><i data-lucide="message-circle"></i><span>(19) 99600-3861</span></a>
+  <div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+</body>
+</html>

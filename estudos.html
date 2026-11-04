@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudos - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
+
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('index.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('historia.html')">História</button>
+      <button class="nav-btn active" onclick="navigateTo('estudos.html')">Estudos</button>
+      <button class="nav-btn" onclick="navigateTo('parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('equipe.html')">Equipe</button>
+      <button class="nav-btn" onclick="navigateTo('conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('eventos.html')">Eventos</button>
+      <button class="nav-btn" onclick="navigateTo('matricula.html')">Matrícula</button>
+    </nav>
+
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge"><i data-lucide="brain"></i> CENTRO DE ESTUDOS</div>
+      <h2>Flashcards, Listas de Exercícios e Resumos</h2>
+      <p>Acesse o material pedagógico e amplie as imagens das atividades clicando nelas.</p>
+    </div>
+
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="plus-circle"></i> Painel do Professor: Publicar Conteúdo de Estudos</h3>
+      <div class="admin-form">
+        <select id="vest-categoria" onchange="toggleInputsVisiveis()">
+          <option value="flashcard">🎴 Flashcard (Pergunta e Resposta)</option>
+          <option value="resumo">📝 Resumo de Matéria</option>
+          <option value="atividade">🖼️ Lista de Exercícios (com Foto)</option>
+        </select>
+        <input type="text" id="vest-materia" placeholder="Matéria (Ex: Matemática, Física)">
+        <input type="text" id="vest-titulo" placeholder="Título / Pergunta">
+        <input type="text" id="vest-foto" class="hidden" placeholder="Cole a foto com Ctrl+V ou insira o link">
+        <textarea id="vest-conteudo" placeholder="Conteúdo do resumo ou resposta do flashcard..."></textarea>
+      </div>
+      <button class="btn-add" onclick="cadastrarMaterial()"><i data-lucide="plus"></i> Publicar Material</button>
+    </div>
+
+    <h3 style="margin: 30px 0 15px 0; color: var(--accent-brown);"><i data-lucide="layers"></i> Flashcards Interativos (Clique para virar)</h3>
+    <div id="grid-flashcards" class="grid-cards">
+      <div class="flashcard-container">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <div class="flashcard" onclick="flipCard(this)">
+          <div class="flashcard-face flashcard-front">
+            <span class="flashcard-tag">Física</span>
+            <h3>Qual é a 1ª Lei de Newton?</h3>
+            <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="flashcard-tag">Resposta</span>
+            <p><strong>Princípio da Inércia:</strong> Um corpo em repouso permanece em repouso e um corpo em movimento continua em movimento a menos que uma força atue sobre ele.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin: 40px 0 15px 0; color: var(--accent-brown);"><i data-lucide="file-image"></i> Listas de Exercícios (Clique na foto para ampliar)</h3>
+    <div id="grid-atividades" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Lista de Exercícios" class="img-expandable" onclick="abrirImagem(this.src)" title="Clique para expandir">
+        <h3>Lista de Exercícios: Equações do 2º Grau</h3>
+        <p class="role">Matemática</p>
+        <p class="desc">Clique na foto para abri-la em tamanho grande.</p>
+      </div>
+    </div>
+
+    <h3 style="margin: 40px 0 15px 0; color: var(--accent-brown);"><i data-lucide="book-open"></i> Resumos Teóricos</h3>
+    <div id="grid-resumos" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <h3>💡 Método Pomodoro de Estudos</h3>
+        <p class="role">Dica de Estudo</p>
+        <p class="desc">Estude 25 minutos com foco total e descanse 5 minutos para otimizar o aprendizado.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="modal-imagem" class="modal-overlay hidden" onclick="fecharImagem()">
+    <div class="modal-img-wrapper" onclick="event.stopPropagation()">
+      <span class="btn-close-img" onclick="fecharImagem()">&times;</span>
+      <img id="img-ampliada" src="" alt="Imagem Ampliada">
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4><i data-lucide="graduation-cap"></i> E.E. Castello Branco</h4>
+        <p>Ensino de excelência, formando cidadãos e futuros profissionais em Limeira-SP.</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="phone"></i> Contato</h4>
+        <p><strong>Telefone:</strong> (19) 3441-1464</p>
+        <p><strong>WhatsApp:</strong> (19) 99600-3861</p>
+        <p><strong>Endereço:</strong> Rua Piauí, 472 - Vila Cláudia, Limeira - SP</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="share-2"></i> Redes Sociais</h4>
+        <a href="https://instagram.com" target="_blank" class="footer-social"><i data-lucide="instagram"></i> Siga no Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Gabriela Lima, Giovana Santana, Gustavo Couto e Isabeli Martins</strong>.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    const CHAVE_STORAGE = 'castello_estudos';
+
+    function flipCard(card) { card.classList.toggle('flipped'); }
+
+    function toggleInputsVisiveis() {
+      const cat = document.getElementById('vest-categoria').value;
+      const campoFoto = document.getElementById('vest-foto');
+      if (cat === 'atividade') { campoFoto.classList.remove('hidden'); } else { campoFoto.classList.add('hidden'); }
+    }
+
+    function abrirImagem(url) {
+      document.getElementById('img-ampliada').src = url;
+      document.getElementById('modal-imagem').classList.remove('hidden');
+    }
+
+    function fecharImagem() {
+      document.getElementById('modal-imagem').classList.add('hidden');
+    }
+
+    function carregarEstudos() {
+      const salvos = localStorage.getItem(CHAVE_STORAGE);
+      if (salvos) {
+        const dados = JSON.parse(salvos);
+        if (dados.flashcards) document.getElementById('grid-flashcards').innerHTML = dados.flashcards;
+        if (dados.atividades) document.getElementById('grid-atividades').innerHTML = dados.atividades;
+        if (dados.resumos) document.getElementById('grid-resumos').innerHTML = dados.resumos;
+
+        if (window.lucide) lucide.createIcons();
+        const savedRole = sessionStorage.getItem('userRole');
+        if (savedRole === 'Gestão/Professor') {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+        }
+      }
+    }
+
+    function salvarEstudos() {
+      const dados = {
+        flashcards: document.getElementById('grid-flashcards').innerHTML,
+        atividades: document.getElementById('grid-atividades').innerHTML,
+        resumos: document.getElementById('grid-resumos').innerHTML
+      };
+      localStorage.setItem(CHAVE_STORAGE, JSON.stringify(dados));
+    }
+
+    function cadastrarMaterial() {
+      const cat = document.getElementById('vest-categoria').value;
+      const materia = document.getElementById('vest-materia').value.trim();
+      const titulo = document.getElementById('vest-titulo').value.trim();
+      const foto = document.getElementById('vest-foto').value.trim();
+      const conteudo = document.getElementById('vest-conteudo').value.trim();
+
+      if (!titulo || !conteudo) { alert('Preencha o Título/Pergunta e o Conteúdo!'); return; }
+
+      if (cat === 'flashcard') {
+        const container = document.getElementById('grid-flashcards');
+        const card = document.createElement('div');
+        card.className = 'flashcard-container';
+        card.innerHTML = `
+          <button class="btn-minus admin-only" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+          <div class="flashcard" onclick="flipCard(this)">
+            <div class="flashcard-face flashcard-front">
+              <span class="flashcard-tag">${materia || 'Geral'}</span>
+              <h3>${titulo}</h3>
+              <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+            </div>
+            <div class="flashcard-face flashcard-back">
+              <span class="flashcard-tag">Resposta</span>
+              <p>${conteudo}</p>
+            </div>
+          </div>`;
+        container.prepend(card);
+      } else if (cat === 'atividade') {
+        const container = document.getElementById('grid-atividades');
+        const urlFoto = foto || 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80';
+        const card = document.createElement('div');
+        card.className = 'card-item';
+        card.innerHTML = `
+          <button class="btn-minus admin-only" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+          <img src="${urlFoto}" alt="Imagem da Atividade" class="img-expandable" onclick="abrirImagem(this.src)" title="Clique para expandir" style="max-height: 200px; object-fit: cover; width: 100%; border-radius: 8px;">
+          <h3>${titulo}</h3>
+          <p class="role">${materia || 'Atividade'}</p>
+          <p class="desc">${conteudo}</p>`;
+        container.prepend(card);
+      } else {
+        const container = document.getElementById('grid-resumos');
+        const card = document.createElement('div');
+        card.className = 'card-item';
+        card.innerHTML = `
+          <button class="btn-minus admin-only" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+          <h3>${titulo}</h3>
+          <p class="role">${materia || 'Resumo'}</p>
+          <p class="desc">${conteudo}</p>`;
+        container.prepend(card);
+      }
+
+      if (window.lucide) lucide.createIcons();
+      document.getElementById('vest-materia').value = '';
+      document.getElementById('vest-titulo').value = '';
+      document.getElementById('vest-foto').value = '';
+      document.getElementById('vest-conteudo').value = '';
+      salvarEstudos();
+    }
+
+    function removerItem(btn) { 
+      if (confirm('Deseja excluir este item?')) { 
+        btn.parentElement.remove(); 
+        salvarEstudos();
+      } 
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarEstudos);
+  </script>
+
+  <a href="https://wa.me/5519996003861?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" target="_blank" class="whatsapp-float" title="Fale no WhatsApp"><i data-lucide="message-circle"></i><span>(19) 99600-3861</span></a>
+  <div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+</body>
+</html>

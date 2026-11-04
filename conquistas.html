@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conquistas - E.E. Castello Branco</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
+
+    <nav class="nav-links">
+      <button class="nav-btn" onclick="navigateTo('index.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('estudos.html')">Estudos</button>
+      <button class="nav-btn" onclick="navigateTo('parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('equipe.html')">Equipe</button>
+      <button class="nav-btn active" onclick="navigateTo('conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('eventos.html')">Eventos</button>
+      <button class="nav-btn" onclick="navigateTo('matricula.html')">Matrícula</button>
+    </nav>
+
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="pane-header center">
+      <div class="badge"><i data-lucide="trophy"></i> HISTÓRIAS DE SUCESSO</div>
+      <h2>Conquistas dos Nossos Alunos</h2>
+      <p>Relatos de estudantes em projetos de intercâmbio, vestibulares  e competições.</p>
+    </div>
+
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="award"></i> Adicionar Depoimento / Conquista</h3>
+      <div class="admin-form">
+        <input type="text" id="arq-aluno" placeholder="Nome do Aluno">
+        <input type="text" id="arq-pais" placeholder="Conquista / País (Ex: Intercâmbio Canadá 🇨🇦)">
+        <input type="text" id="arq-foto" placeholder="Cole a foto com Ctrl+V ou insira o link">
+        <textarea id="arq-relato" placeholder="Relato do aluno..."></textarea>
+      </div>
+      <button class="btn-add" onclick="adicionarRelato()"><i data-lucide="plus"></i> Publicar Depoimento</button>
+    </div>
+
+    <div id="grid-conquistas" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <img src="img/WhatsApp Image 2026-10-28 at 14.56.30.jpeg" alt="Aluna">
+        <h3>Beatriz Santana</h3>
+        <p class="role">Intercâmbio para Australia</p>
+        <p class="desc"><em>"Estudar fora através dos incentivos da escola abriu portas incríveis para a minha vida acadêmica!"</em></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4><i data-lucide="graduation-cap"></i> E.E. Castello Branco</h4>
+        <p>Ensino de excelência, formando cidadãos e futuros profissionais em Limeira-SP.</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="phone"></i> Contato</h4>
+        <p><strong>Telefone:</strong> (19) 3441-1464</p>
+        <p><strong>WhatsApp:</strong> (19) 99600-3861</p>
+        <p><strong>Endereço:</strong> Rua Piauí, 472 - Vila Cláudia, Limeira - SP</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="share-2"></i> Redes Sociais</h4>
+        <a href="https://instagram.com" target="_blank" class="footer-social"><i data-lucide="instagram"></i> Siga no Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Gabriela Lima, Giovana Santana, Gustavo Couto e Isabeli Martins</strong>.</p>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script>
+    const CHAVE_STORAGE = 'castello_conquistas';
+
+    function carregarConquistas() {
+      const salvos = localStorage.getItem(CHAVE_STORAGE);
+      if (salvos) {
+        document.getElementById('grid-conquistas').innerHTML = salvos;
+        if (window.lucide) lucide.createIcons();
+        const savedRole = sessionStorage.getItem('userRole');
+        if (savedRole === 'Gestão/Professor') {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+        }
+      }
+    }
+
+    function salvarConquistas() {
+      localStorage.setItem(CHAVE_STORAGE, document.getElementById('grid-conquistas').innerHTML);
+    }
+
+    function adicionarRelato() {
+      const aluno = document.getElementById('arq-aluno').value.trim();
+      const pais = document.getElementById('arq-pais').value.trim();
+      let foto = document.getElementById('arq-foto').value.trim();
+      const relato = document.getElementById('arq-relato').value.trim();
+
+      if (!aluno || !relato) { alert('Informe o nome e o relato!'); return; }
+      if (!foto) foto = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500&q=80';
+
+      const card = document.createElement('div');
+      card.className = 'card-item';
+      card.innerHTML = `
+        <button class="btn-minus admin-only" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <img src="${foto}" alt="Foto de ${aluno}" style="max-height: 200px; object-fit: cover; width: 100%; border-radius: 8px;">
+        <h3>${aluno}</h3>
+        <p class="role">${pais || 'Conquista'}</p>
+        <p class="desc"><em>"${relato}"</em></p>`;
+
+      document.getElementById('grid-conquistas').prepend(card);
+      if (window.lucide) lucide.createIcons();
+      document.getElementById('arq-aluno').value = '';
+      document.getElementById('arq-pais').value = '';
+      document.getElementById('arq-foto').value = '';
+      document.getElementById('arq-relato').value = '';
+      salvarConquistas();
+    }
+
+    function removerCard(btn) { 
+      if (confirm('Deseja excluir este relato?')) {
+        btn.parentElement.remove(); 
+        salvarConquistas();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarConquistas);
+  </script>
+
+  <a href="https://wa.me/5519996003861?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" target="_blank" class="whatsapp-float" title="Fale no WhatsApp"><i data-lucide="message-circle"></i><span>(19) 99600-3861</span></a>
+  <div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E.E. Castello Branco - Início</title>
+  <link rel="shortcut icon" href="img/805f5799-a978-4b83-9b5b-9236b4a4ada0.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lucide/web"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <i data-lucide="graduation-cap" class="logo-icon"></i>
+      <span class="logo-text">Castello<span>Branco</span></span>
+    </a>
+    
+    <nav class="nav-links">
+      <button class="nav-btn active" onclick="navigateTo('index.html')">Início</button>
+      <button class="nav-btn" onclick="navigateTo('historia.html')">História</button>
+      <button class="nav-btn" onclick="navigateTo('estudos.html')">Estudos</button>
+      <button class="nav-btn" onclick="navigateTo('parcerias.html')">Parcerias</button>
+      <button class="nav-btn" onclick="navigateTo('equipe.html')">Equipe</button>
+      <button class="nav-btn" onclick="navigateTo('conquistas.html')">Conquistas</button>
+      <button class="nav-btn" onclick="navigateTo('eventos.html')">Eventos</button>
+      <button class="nav-btn" onclick="navigateTo('matricula.html')">Matrícula</button>
+    </nav>
+
+    <div class="header-right">
+      <span id="user-badge" class="user-profile-badge hidden"></span>
+      <button class="btn-cta" onclick="openPerfilModal()">Entrar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="admin-panel admin-only hidden">
+      <h3><i data-lucide="plus-circle"></i> Publicar Novo Comunicado Inicial</h3>
+      <div class="admin-form">
+        <input type="text" id="home-titulo" placeholder="Título do Comunicado">
+        <input type="text" id="home-foto" placeholder="Cole a foto com Ctrl+V ou insira o link (Opcional)">
+        <textarea id="home-desc" placeholder="Mensagem ou anúncio importante..."></textarea>
+      </div>
+      <button class="btn-add" onclick="adicionarAviso()"><i data-lucide="plus"></i> Publicar Aviso</button>
+    </div>
+
+    <div id="hero-container" class="hero-layout">
+      <div class="hero-left">
+        <div class="badge"><i data-lucide="sparkles"></i> BEM-VINDO À E.E. CASTELLO BRANCO</div>
+        <h1 class="hero-title">Ensino de qualidade, <br>professores dedicados e um ambiente que inspira.</h1>
+        <p class="hero-desc">
+          Formando cidadãos e preparando estudantes para o futuro com excelência pedagógica em Limeira-SP.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="navigateTo('historia.html')">Conheça Nossa História</button>
+          <button class="btn-secondary" onclick="navigateTo('matricula.html')">Matrículas</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="image-wrapper">
+          <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/56/9e/34/imagem-do-busto.jpg?w=1200&h=-1&s=1" alt="E.E. Castello Branco - Limeira SP">
+          <div class="floating-badge"><i data-lucide="award"></i>Excelência E Comprometimento</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 15px 0; color: var(--accent-brown);"><i data-lucide="megaphone"></i> Avisos Recentes da Direção</h3>
+    <div id="grid-home-avisos" class="grid-cards">
+      <div class="card-item">
+        <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <h3>Boas-vindas ao Ano Letivo 2026</h3>
+        <p class="desc">Desejamos a todos os alunos, responsáveis e professores um excelente ano repleto de conquistas e aprendizado.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4><i data-lucide="graduation-cap"></i> E.E. Castello Branco</h4>
+        <p>Ensino de excelência, formando cidadãos e futuros profissionais em Limeira-SP.</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="phone"></i> Contato</h4>
+        <p><strong>Telefone:</strong> (19) 3441-1464</p>
+        <p><strong>WhatsApp:</strong> (19) 99600-3861</p>
+        <p><strong>Endereço:</strong> Rua Piauí, 472 - Vila Cláudia, Limeira - SP</p>
+      </div>
+      <div class="footer-col">
+        <h4><i data-lucide="share-2"></i> Redes Sociais</h4>
+        <a href="https://instagram.com" target="_blank" class="footer-social"><i data-lucide="instagram"></i> Siga no Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Gabriela Lima, Giovana Santana, Gustavo Couto e Isabeli Martins</strong>.</p>
+    </div>
+  </footer>
+
+  <div id="modal-perfil" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div id="step-perfil-choice">
+        <h3>Entrar no Sistema Escolar</h3>
+        <p class="modal-subtext">Selecione seu perfil para acessar o painel:</p>
+        <div class="profile-options">
+          <button class="profile-btn" onclick="selectRole('Responsável')"><i data-lucide="user-check"></i><span>Responsável</span></button>
+          <button class="profile-btn" onclick="selectRole('Aluno')"><i data-lucide="graduation-cap"></i><span>Aluno</span></button>
+          <button class="profile-btn" onclick="selectRole('Visitante')"><i data-lucide="users"></i><span>Visitante</span></button>
+          <button class="profile-btn profile-btn-restricted" onclick="showLoginForm()"><i data-lucide="lock"></i><span>Gestão / Professor</span></button>
+        </div>
+        <button class="btn-close-modal" onclick="closePerfilModal()">Cancelar</button>
+      </div>
+
+      <div id="step-login-form" class="hidden">
+        <button class="btn-back" onclick="hideLoginForm()"><i data-lucide="arrow-left"></i> Voltar</button>
+        <h3>Login: Gestão / Professor</h3>
+        <p class="modal-subtext">Insira suas credenciais para gerenciar a plataforma.</p>
+        <form onsubmit="handleStaffLogin(event)" class="login-form">
+          <div class="form-group"><label>Usuário</label><input type="text" id="login-user" placeholder="Digite seu usuário" required></div>
+          <div class="form-group"><label>Senha</label><input type="password" id="login-pass" placeholder="Digite sua senha" required></div>
+          <p id="login-error" class="login-error hidden">Usuário ou senha incorretos!</p>
+          <button type="submit" class="btn-primary full-width">Acessar Painel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    const CHAVE_STORAGE = 'castello_home_avisos';
+
+    function carregarHome() {
+      const salvos = localStorage.getItem(CHAVE_STORAGE);
+      if (salvos) {
+        document.getElementById('grid-home-avisos').innerHTML = salvos;
+        if (window.lucide) lucide.createIcons();
+        const savedRole = sessionStorage.getItem('userRole');
+        if (savedRole === 'Gestão/Professor') {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+        }
+      }
+    }
+
+    function salvarHome() {
+      localStorage.setItem(CHAVE_STORAGE, document.getElementById('grid-home-avisos').innerHTML);
+    }
+
+    function adicionarAviso() {
+      const titulo = document.getElementById('home-titulo').value.trim();
+      const foto = document.getElementById('home-foto').value.trim();
+      const desc = document.getElementById('home-desc').value.trim();
+
+      if (!titulo || !desc) { alert('Preencha o título e a descrição!'); return; }
+
+      let imgHtml = '';
+      if (foto) {
+        imgHtml = `<img src="${foto}" alt="${titulo}" style="max-height: 200px; object-fit: cover; width: 100%; border-radius: 8px; margin-bottom: 10px;">`;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'card-item';
+      card.innerHTML = `
+        <button class="btn-minus admin-only" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
+        ${imgHtml}
+        <h3>${titulo}</h3>
+        <p class="desc">${desc}</p>`;
+
+      document.getElementById('grid-home-avisos').prepend(card);
+      if (window.lucide) lucide.createIcons();
+      document.getElementById('home-titulo').value = '';
+      document.getElementById('home-foto').value = '';
+      document.getElementById('home-desc').value = '';
+      salvarHome();
+    }
+
+    function removerCard(btn) {
+      if (confirm('Deseja excluir este aviso?')) {
+        btn.parentElement.remove();
+        salvarHome();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarHome);
+  </script>
+
+  <a href="https://wa.me/5519996003861?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20E.E.%20Castello%20Branco" target="_blank" class="whatsapp-float" title="Fale no WhatsApp"><i data-lucide="message-circle"></i><span>(19) 99600-3861</span></a>
+  <div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+</body>
+</html>
