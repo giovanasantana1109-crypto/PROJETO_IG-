@@ -70,7 +70,8 @@
     <div id="grid-home-avisos" class="grid-cards">
       <div class="card-item">
         <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
-        <h3>Boas-vindas ao Ano Letivo 2026</h3>
+    <img class="card-image" src="img/images.jpg" alt="Estudantes em ambiente escolar">
+            <h3>Boas-vindas ao Ano Letivo</h3>
         <p class="desc">Desejamos a todos os alunos, responsáveis e professores um excelente ano repleto de conquistas e aprendizado.</p>
       </div>
     </div>
@@ -189,5 +190,60 @@
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
+
+<script>
+(function () {
+  const fallbackFoto = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85';
+  const fallbackReserva = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85';
+  function corrigirImagem(img) {
+    if (!img.dataset.fallbackConfigured) {
+      img.dataset.fallbackConfigured = '1';
+      img.addEventListener('error', function () {
+        if (img.dataset.fallbackStep !== '1') {
+          img.dataset.fallbackStep = '1';
+          img.src = fallbackFoto;
+        } else if (img.dataset.fallbackStep !== '2') {
+          img.dataset.fallbackStep = '2';
+          img.src = fallbackReserva;
+        } else {
+          img.alt = img.alt || 'Imagem ilustrativa';
+          img.classList.add('imagem-indisponivel');
+        }
+      });
+    }
+  }
+  function completarCards() {
+    document.querySelectorAll('.card-item').forEach(function (card) {
+      let img = card.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'card-auto-image';
+        img.alt = 'Imagem ilustrativa relacionada ao conteúdo';
+        img.src = fallbackFoto;
+        const primeiro = card.querySelector('h3, h2, .desc, p');
+        if (primeiro) card.insertBefore(img, primeiro);
+        else card.insertBefore(img, card.firstChild);
+      }
+      corrigirImagem(img);
+    });
+    document.querySelectorAll('.flashcard-front').forEach(function (face) {
+      let img = face.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'flashcard-image';
+        img.alt = 'Imagem ilustrativa do conteúdo';
+        img.src = fallbackFoto;
+        const heading = face.querySelector('h3, h2, p');
+        if (heading) face.insertBefore(img, heading);
+        else face.appendChild(img);
+      }
+      corrigirImagem(img);
+    });
+  }
+  completarCards();
+  const observador = new MutationObserver(completarCards);
+  observador.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body>
 </html>

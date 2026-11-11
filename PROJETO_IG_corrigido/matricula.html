@@ -54,7 +54,8 @@
       <div class="card-item">
         <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
         <i data-lucide="clipboard-check" style="width: 36px; height: 36px; color: var(--accent-brown); margin-bottom: 12px;"></i>
-        <h3>Documentos Exigidos</h3>
+    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=700&q=80" alt="Documentos para matrícula">
+            <h3>Documentos Exigidos</h3>
         <p class="desc">
           • RG e CPF do Aluno e Responsável Legal<br>
           • Comprovante de Residência Recente<br>
@@ -66,7 +67,8 @@
       <div class="card-item">
         <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
         <i data-lucide="clock" style="width: 36px; height: 36px; color: var(--accent-brown); margin-bottom: 12px;"></i>
-        <h3>Horário da Secretaria</h3>
+    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=700&q=80" alt="Atendimento na secretaria">
+            <h3>Horário da Secretaria</h3>
         <p class="desc">
           Atendimento presencial de segunda a sexta-feira.<br>
           <strong>Horário:</strong> das 07h00 às 17h00.
@@ -81,19 +83,22 @@
     <div class="grid-cards" style="justify-content: center; max-width: 700px; margin: 0 auto;">
       <div class="card-item" style="text-align: center;">
         <i data-lucide="map-pin" style="width: 40px; height: 40px; color: var(--accent-brown); margin-bottom: 12px;"></i>
-        <h3>Endereço</h3>
+    <img src="https://images.unsplash.com/photo-1524666041070-9fc4267a5f6e?auto=format&fit=crop&w=700&q=80" alt="Mapa e localização">
+            <h3>Endereço</h3>
         <p class="desc">Rua Piauí, 472 - Vila Cláudia<br>Limeira - SP, CEP 13480-406</p>
       </div>
 
       <div class="card-item" style="text-align: center;">
         <i data-lucide="phone" style="width: 40px; height: 40px; color: var(--accent-brown); margin-bottom: 12px;"></i>
-        <h3>Telefone Fixo</h3>
+    <img src="https://images.unsplash.com/photo-1525186402429-b4ff38bedec6?auto=format&fit=crop&w=700&q=80" alt="Contato telefônico">
+            <h3>Telefone Fixo</h3>
         <p class="desc">(19) 3441-1464</p>
       </div>
 
       <div class="card-item" style="text-align: center;">
         <i data-lucide="message-circle" style="width: 40px; height: 40px; color: #25d366; margin-bottom: 12px;"></i>
-        <h3>WhatsApp Oficial</h3>
+    <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=700&q=80" alt="Contato por mensagem">
+            <h3>WhatsApp Oficial</h3>
         <p class="desc">(19) 99600-3861</p>
       </div>
     </div>
@@ -177,5 +182,60 @@
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
+
+<script>
+(function () {
+  const fallbackFoto = 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=85';
+  const fallbackReserva = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85';
+  function corrigirImagem(img) {
+    if (!img.dataset.fallbackConfigured) {
+      img.dataset.fallbackConfigured = '1';
+      img.addEventListener('error', function () {
+        if (img.dataset.fallbackStep !== '1') {
+          img.dataset.fallbackStep = '1';
+          img.src = fallbackFoto;
+        } else if (img.dataset.fallbackStep !== '2') {
+          img.dataset.fallbackStep = '2';
+          img.src = fallbackReserva;
+        } else {
+          img.alt = img.alt || 'Imagem ilustrativa';
+          img.classList.add('imagem-indisponivel');
+        }
+      });
+    }
+  }
+  function completarCards() {
+    document.querySelectorAll('.card-item').forEach(function (card) {
+      let img = card.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'card-auto-image';
+        img.alt = 'Imagem ilustrativa relacionada ao conteúdo';
+        img.src = fallbackFoto;
+        const primeiro = card.querySelector('h3, h2, .desc, p');
+        if (primeiro) card.insertBefore(img, primeiro);
+        else card.insertBefore(img, card.firstChild);
+      }
+      corrigirImagem(img);
+    });
+    document.querySelectorAll('.flashcard-front').forEach(function (face) {
+      let img = face.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'flashcard-image';
+        img.alt = 'Imagem ilustrativa do conteúdo';
+        img.src = fallbackFoto;
+        const heading = face.querySelector('h3, h2, p');
+        if (heading) face.insertBefore(img, heading);
+        else face.appendChild(img);
+      }
+      corrigirImagem(img);
+    });
+  }
+  completarCards();
+  const observador = new MutationObserver(completarCards);
+  observador.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body>
 </html>

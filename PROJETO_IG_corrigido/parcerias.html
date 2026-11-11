@@ -53,9 +53,11 @@
     <div id="grid-parcerias" class="grid-cards">
       <div class="card-item">
         <button class="btn-minus admin-only hidden" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
-        <h3>Parceria SENAI</h3>
+    <img class="card-image" src="img/escola-senai-1.jpg" alt="Formação técnica em laboratório">
+            <h3>Parceria SENAI</h3>
         <p class="desc">Desenvolvimento de competências técnicas, inovação e projetos práticos integrados ao aprendizado dos alunos.</p>
       </div>
+
     </div>
   </main>
 
@@ -77,7 +79,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Isabeli Sousa, Gabriela Lima, Giovana Santana e Gustavo Couto</strong>.</p>
+      <p>Foi desenvolvido em 2026 pelos alunos da parceria Castelo Senai: <strong>Gabriela Lima, Giovana Santana, Gustavo Couto e Isabeli Martins</strong>.</p>
     </div>
   </footer>
 
@@ -85,16 +87,27 @@
   <script>
     const CHAVE_STORAGE = 'castello_parcerias';
 
+    function atualizarPermissoesParcerias() {
+      const ehGestao = sessionStorage.getItem('userRole') === 'Gestão/Professor';
+
+      document.querySelectorAll('#grid-parcerias .admin-only').forEach(botao => {
+        botao.classList.toggle('hidden', !ehGestao);
+      });
+
+      document.querySelectorAll('.admin-panel.admin-only').forEach(painel => {
+        painel.classList.toggle('hidden', !ehGestao);
+      });
+    }
+
     function carregarParcerias() {
       const salvos = localStorage.getItem(CHAVE_STORAGE);
+
       if (salvos) {
         document.getElementById('grid-parcerias').innerHTML = salvos;
-        if (window.lucide) lucide.createIcons();
-        const savedRole = sessionStorage.getItem('userRole');
-        if (savedRole === 'Gestão/Professor') {
-          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
-        }
       }
+
+      atualizarPermissoesParcerias();
+      if (window.lucide) lucide.createIcons();
     }
 
     function salvarParcerias() {
@@ -102,15 +115,23 @@
     }
 
     function adicionarParceria() {
+      if (sessionStorage.getItem('userRole') !== 'Gestão/Professor') {
+        alert('Apenas Gestão/Professor pode cadastrar parcerias.');
+        return;
+      }
+
       const titulo = document.getElementById('parc-titulo').value.trim();
       const foto = document.getElementById('parc-foto').value.trim();
       const desc = document.getElementById('parc-desc').value.trim();
 
-      if (!titulo || !desc) { alert('Informe o nome e a descrição!'); return; }
+      if (!titulo || !desc) {
+        alert('Informe o nome e a descrição!');
+        return;
+      }
 
       let imgHtml = '';
       if (foto) {
-        imgHtml = `<img src="${foto}" alt="${titulo}">`;
+        imgHtml = `<img class="card-image" src="${foto}" alt="${titulo}">`;
       }
 
       const card = document.createElement('div');
@@ -118,21 +139,36 @@
       card.innerHTML = `
         <button class="btn-minus admin-only" onclick="removerCard(this)" title="Remover"><i data-lucide="minus"></i></button>
         ${imgHtml}
-        <h3>${titulo}</h3>
-        <p class="desc">${desc}</p>`;
+        <h3></h3>
+        <p class="desc"></p>`;
+
+      card.querySelector('h3').textContent = titulo;
+      card.querySelector('.desc').textContent = desc;
 
       document.getElementById('grid-parcerias').prepend(card);
+      atualizarPermissoesParcerias();
+
       if (window.lucide) lucide.createIcons();
+
       document.getElementById('parc-titulo').value = '';
       document.getElementById('parc-foto').value = '';
       document.getElementById('parc-desc').value = '';
+
       salvarParcerias();
     }
 
     function removerCard(btn) {
+      if (sessionStorage.getItem('userRole') !== 'Gestão/Professor') {
+        alert('Apenas Gestão/Professor pode remover parcerias.');
+        return;
+      }
+
       if (confirm('Deseja remover esta parceria?')) {
-        btn.parentElement.remove();
-        salvarParcerias();
+        const card = btn.closest('.card-item');
+        if (card) {
+          card.remove();
+          salvarParcerias();
+        }
       }
     }
 
@@ -144,5 +180,60 @@
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
+
+<script>
+(function () {
+  const fallbackFoto = 'https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?auto=format&fit=crop&w=900&q=85';
+  const fallbackReserva = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85';
+  function corrigirImagem(img) {
+    if (!img.dataset.fallbackConfigured) {
+      img.dataset.fallbackConfigured = '1';
+      img.addEventListener('error', function () {
+        if (img.dataset.fallbackStep !== '1') {
+          img.dataset.fallbackStep = '1';
+          img.src = fallbackFoto;
+        } else if (img.dataset.fallbackStep !== '2') {
+          img.dataset.fallbackStep = '2';
+          img.src = fallbackReserva;
+        } else {
+          img.alt = img.alt || 'Imagem ilustrativa';
+          img.classList.add('imagem-indisponivel');
+        }
+      });
+    }
+  }
+  function completarCards() {
+    document.querySelectorAll('.card-item').forEach(function (card) {
+      let img = card.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'card-auto-image';
+        img.alt = 'Imagem ilustrativa relacionada ao conteúdo';
+        img.src = fallbackFoto;
+        const primeiro = card.querySelector('h3, h2, .desc, p');
+        if (primeiro) card.insertBefore(img, primeiro);
+        else card.insertBefore(img, card.firstChild);
+      }
+      corrigirImagem(img);
+    });
+    document.querySelectorAll('.flashcard-front').forEach(function (face) {
+      let img = face.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'flashcard-image';
+        img.alt = 'Imagem ilustrativa do conteúdo';
+        img.src = fallbackFoto;
+        const heading = face.querySelector('h3, h2, p');
+        if (heading) face.insertBefore(img, heading);
+        else face.appendChild(img);
+      }
+      corrigirImagem(img);
+    });
+  }
+  completarCards();
+  const observador = new MutationObserver(completarCards);
+  observador.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body>
 </html>

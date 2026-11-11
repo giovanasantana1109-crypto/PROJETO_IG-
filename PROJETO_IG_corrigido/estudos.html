@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estudos - E.E. Castello Branco</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .flashcard-container { height: 330px; }
+    .flashcard-face { padding: 16px; overflow: hidden; }
+    .flashcard-image { width: 100%; height: 125px; object-fit: cover; border-radius: 9px; margin: 4px 0 10px; }
+    .flashcard-front h3 { font-size: 1rem; line-height: 1.35; }
+    .flashcard-back p { font-size: .92rem; line-height: 1.5; }
+    @media (max-width: 600px) { .flashcard-container { height: 320px; } }
+  </style>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@lucide/web"></script>
 </head>
@@ -63,12 +71,93 @@
         <div class="flashcard" onclick="flipCard(this)">
           <div class="flashcard-face flashcard-front">
             <span class="flashcard-tag">Física</span>
+            <img class="flashcard-image" src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=700&q=80" alt="Fórmulas matemáticas em um quadro">
             <h3>Qual é a 1ª Lei de Newton?</h3>
             <p class="flashcard-hint">👆 Clique para ver a resposta</p>
           </div>
           <div class="flashcard-face flashcard-back">
             <span class="flashcard-tag">Resposta</span>
-            <p><strong>Princípio da Inércia:</strong> Um corpo em repouso permanece em repouso e um corpo em movimento continua em movimento a menos que uma força atue sobre ele.</p>
+            <p><strong>Princípio da Inércia:</strong> um corpo tende a permanecer em repouso ou em movimento retilíneo uniforme, a menos que uma força resultante atue sobre ele.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-container">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <div class="flashcard" onclick="flipCard(this)">
+          <div class="flashcard-face flashcard-front">
+            <span class="flashcard-tag">Biologia</span>
+            <img class="flashcard-image" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=700&q=80" alt="Experimento em laboratório">
+            <h3>O que é fotossíntese?</h3>
+            <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="flashcard-tag">Resposta</span>
+            <p>É o processo pelo qual plantas, algas e algumas bactérias usam a energia da luz para produzir matéria orgânica a partir de água e gás carbônico, liberando oxigênio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-container">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <div class="flashcard" onclick="flipCard(this)">
+          <div class="flashcard-face flashcard-front">
+            <span class="flashcard-tag">Química</span>
+            <img class="flashcard-image" src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?auto=format&fit=crop&w=700&q=80" alt="Materiais de laboratório de química">
+            <h3>Qual é a fórmula química da água?</h3>
+            <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="flashcard-tag">Resposta</span>
+            <p><strong>H₂O:</strong> cada molécula de água é formada por dois átomos de hidrogênio e um átomo de oxigênio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-container">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <div class="flashcard" onclick="flipCard(this)">
+          <div class="flashcard-face flashcard-front">
+            <span class="flashcard-tag">Geografia</span>
+            <img class="flashcard-image" src="https://images.unsplash.com/photo-1524666041070-9fc4267a5f6e?auto=format&fit=crop&w=700&q=80" alt="Globo terrestre">
+            <h3>Qual é a capital do Brasil?</h3>
+            <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="flashcard-tag">Resposta</span>
+            <p>Brasília, localizada no Distrito Federal, é a capital do Brasil desde 1960.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-container">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <div class="flashcard" onclick="flipCard(this)">
+          <div class="flashcard-face flashcard-front">
+            <span class="flashcard-tag">Português</span>
+            <img class="flashcard-image" src="https://images.unsplash.com/photo-1455390582262-044c424a2b2b?auto=format&fit=crop&w=700&q=80" alt="Livros e material de leitura">
+            <h3>O que é um substantivo?</h3>
+            <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="flashcard-tag">Resposta</span>
+            <p>É a classe de palavras que nomeia seres, objetos, lugares, sentimentos, ideias e outros elementos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-container">
+        <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
+        <div class="flashcard" onclick="flipCard(this)">
+          <div class="flashcard-face flashcard-front">
+            <span class="flashcard-tag">Matemática</span>
+            <img class="flashcard-image" src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=700&q=80" alt="Cálculos matemáticos em um caderno">
+            <h3>Qual é o teorema de Pitágoras?</h3>
+            <p class="flashcard-hint">👆 Clique para ver a resposta</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="flashcard-tag">Resposta</span>
+            <p>Em um triângulo retângulo, o quadrado da hipotenusa é igual à soma dos quadrados dos catetos: <strong>a² = b² + c²</strong>.</p>
           </div>
         </div>
       </div>
@@ -78,7 +167,7 @@
     <div id="grid-atividades" class="grid-cards">
       <div class="card-item">
         <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
-        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Lista de Exercícios" class="img-expandable" onclick="abrirImagem(this.src)" title="Clique para expandir">
+        <img src="C:\Users\50233826807\Downloads\PROJETO_IG³_2.0\PROJETO_IG_corrigido\img\Figura-33-Dois-ultimos-conjuntos-de-exercicios-sobre-equacao-do-2-grau.webp" alt="Lista de Exercícios" class="img-expandable" onclick="abrirImagem(this.src)" title="Clique para expandir">
         <h3>Lista de Exercícios: Equações do 2º Grau</h3>
         <p class="role">Matemática</p>
         <p class="desc">Clique na foto para abri-la em tamanho grande.</p>
@@ -89,7 +178,8 @@
     <div id="grid-resumos" class="grid-cards">
       <div class="card-item">
         <button class="btn-minus admin-only hidden" onclick="removerItem(this)" title="Remover"><i data-lucide="minus"></i></button>
-        <h3>💡 Método Pomodoro de Estudos</h3>
+    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=700&q=80" alt="Organização dos estudos">
+            <h3>💡 Método Pomodoro de Estudos</h3>
         <p class="role">Dica de Estudo</p>
         <p class="desc">Estude 25 minutos com foco total e descanse 5 minutos para otimizar o aprendizado.</p>
       </div>
@@ -246,5 +336,60 @@
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
+
+<script>
+(function () {
+  const fallbackFoto = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=85';
+  const fallbackReserva = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85';
+  function corrigirImagem(img) {
+    if (!img.dataset.fallbackConfigured) {
+      img.dataset.fallbackConfigured = '1';
+      img.addEventListener('error', function () {
+        if (img.dataset.fallbackStep !== '1') {
+          img.dataset.fallbackStep = '1';
+          img.src = fallbackFoto;
+        } else if (img.dataset.fallbackStep !== '2') {
+          img.dataset.fallbackStep = '2';
+          img.src = fallbackReserva;
+        } else {
+          img.alt = img.alt || 'Imagem ilustrativa';
+          img.classList.add('imagem-indisponivel');
+        }
+      });
+    }
+  }
+  function completarCards() {
+    document.querySelectorAll('.card-item').forEach(function (card) {
+      let img = card.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'card-auto-image';
+        img.alt = 'Imagem ilustrativa relacionada ao conteúdo';
+        img.src = fallbackFoto;
+        const primeiro = card.querySelector('h3, h2, .desc, p');
+        if (primeiro) card.insertBefore(img, primeiro);
+        else card.insertBefore(img, card.firstChild);
+      }
+      corrigirImagem(img);
+    });
+    document.querySelectorAll('.flashcard-front').forEach(function (face) {
+      let img = face.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'flashcard-image';
+        img.alt = 'Imagem ilustrativa do conteúdo';
+        img.src = fallbackFoto;
+        const heading = face.querySelector('h3, h2, p');
+        if (heading) face.insertBefore(img, heading);
+        else face.appendChild(img);
+      }
+      corrigirImagem(img);
+    });
+  }
+  completarCards();
+  const observador = new MutationObserver(completarCards);
+  observador.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body>
 </html>
